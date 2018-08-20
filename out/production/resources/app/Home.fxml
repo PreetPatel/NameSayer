@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXMasonryPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane fx:id="anchorPane" prefHeight="800.0" prefWidth="1200.0" style="-fx-background-color: #023436;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.MainController">
+   <children>
+      <AnchorPane prefHeight="143.0" prefWidth="1200.0" style="-fx-background-color: #037971;">
+         <children>
+            <Text fx:id="text" fill="WHITE" layoutX="17.0" layoutY="108.0" strokeType="OUTSIDE" strokeWidth="1.0" text="NAMESAYER" textAlignment="CENTER" wrappingWidth="1165.7578125">
+               <font>
+                  <Font name="Lato Heavy" size="96.0" />
+               </font>
+            </Text>
+         </children>
+      </AnchorPane>
+      <JFXButton alignment="CENTER" buttonType="RAISED" layoutX="962.0" layoutY="707.0" onAction="#createButtonHandler" prefHeight="68.0" prefWidth="212.0" ripplerFill="#023436" style="-fx-background-color: #03b5aa;" text="New Creation" textAlignment="CENTER" textFill="WHITE">
+         <font>
+            <Font name="Lato Medium" size="25.0" />
+         </font></JFXButton>
+      <JFXMasonryPane fx:id="creationsPane" layoutX="13.0" layoutY="159.0" prefHeight="531.0" prefWidth="1176.0" />
+      <Text fx:id="introText" fill="WHITE" layoutX="39.0" layoutY="753.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Select one of the following creations to get started" wrappingWidth="852.7294921875">
+         <font>
+            <Font name="Lato Medium" size="33.0" />
+         </font>
+      </Text>
+      <JFXButton fx:id="playButton" alignment="CENTER" buttonType="RAISED" layoutX="480.0" layoutY="707.0" onAction="#playbuttonhandler" prefHeight="68.0" prefWidth="179.0" ripplerFill="#023436" style="-fx-background-color: #03b5aa;" text="PLAY" textAlignment="CENTER" textFill="WHITE">
+         <font>
+            <Font name="Lato Medium" size="25.0" />
+         </font>
+      </JFXButton>
+      <Text fx:id="creationNameDisplay" fill="WHITE" layoutX="39.0" layoutY="753.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="418.7294921875">
+         <font>
+            <Font name="Lato Medium" size="33.0" />
+         </font>
+      </Text>
+      <JFXButton fx:id="deleteButton" alignment="CENTER" buttonType="RAISED" layoutX="688.0" layoutY="707.0" onAction="#deletebuttonhandler" prefHeight="68.0" prefWidth="154.0" ripplerFill="#023436" style="-fx-background-color: #03b5aa;" text="DELETE" textAlignment="CENTER" textFill="WHITE">
+         <font>
+            <Font name="Lato Medium" size="25.0" />
+         </font>
+      </JFXButton>
+      <StackPane fx:id="stackPane" prefHeight="800.0" prefWidth="1200.0" />
+   </children>
+</AnchorPane>
