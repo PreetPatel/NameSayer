@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
-<?import com.jfoenix.controls.JFXProgressBar?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
@@ -37,6 +36,20 @@
             <Font name="Lato Heavy" size="30.0" />
          </font>
       </Text>
-      <JFXProgressBar fx:id="progressBar" layoutX="405.0" layoutY="587.0" prefHeight="12.0" prefWidth="391.0" />
+      <JFXButton fx:id="listenAudio" alignment="CENTER" buttonType="RAISED" layoutX="241.0" layoutY="487.0" onAction="#playAudio" prefHeight="68.0" prefWidth="148.0" ripplerFill="#023436" style="-fx-background-color: #03b5aa;" text="LISTEN" textAlignment="CENTER" textFill="WHITE">
+         <font>
+            <Font name="Lato Medium" size="25.0" />
+         </font>
+      </JFXButton>
+      <JFXButton fx:id="keepAudio" alignment="CENTER" buttonType="RAISED" layoutX="526.0" layoutY="497.0" onAction="#keepButtonHandler" prefHeight="68.0" prefWidth="148.0" ripplerFill="#023436" style="-fx-background-color: #03b5aa;" text="KEEP" textAlignment="CENTER" textFill="WHITE">
+         <font>
+            <Font name="Lato Medium" size="25.0" />
+         </font>
+      </JFXButton>
+      <JFXButton fx:id="redoAudio" alignment="CENTER" buttonType="RAISED" layoutX="804.0" layoutY="497.0" onAction="#redoButtonHandler" prefHeight="68.0" prefWidth="148.0" ripplerFill="#023436" style="-fx-background-color: #03b5aa;" text="REDO" textAlignment="CENTER" textFill="WHITE">
+         <font>
+            <Font name="Lato Medium" size="25.0" />
+         </font>
+      </JFXButton>
     </children>
 </AnchorPane>

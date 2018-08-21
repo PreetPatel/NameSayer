@@ -45,19 +45,26 @@ public class PlayCreation {
 
     private MediaPlayer mediaPlayer;
 
+    private Duration duration = Duration.seconds(0);
+
     public static void setMediaToPlay(String media) {
         mediaToPlay = media;
     }
 
     public void playHandler() {
+        mediaPlayer.seek(duration);
+        System.out.println("Play :" + duration.toSeconds());
         mediaPlayer.play();
     }
 
     public void pauseHandler() {
+        duration = mediaPlayer.getCurrentTime();
+        System.out.println("Pause :" + duration.toSeconds());
         mediaPlayer.stop();
     }
 
     public void backHandler() throws Exception{
+        mediaPlayer.stop();
         Pane newLoadedPane =  FXMLLoader.load(getClass().getResource("Home.fxml"));
         anchorPane.getChildren().add(newLoadedPane);
     }
@@ -73,7 +80,7 @@ public class PlayCreation {
             @Override
             public void run() {
 
-                videoslider.setMax(media.getDuration().toSeconds() - 0.3);
+                videoslider.setMax(media.getDuration().toSeconds());
 
                 mediaPlayer.play();
 
