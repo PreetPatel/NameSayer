@@ -10,6 +10,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.text.Text;
+
 import javax.swing.*;
 import java.io.File;
 import java.io.IOException;
@@ -65,15 +66,34 @@ public class CreateCreation {
 
     @FXML
     private void startRecord() throws IOException, InterruptedException {
+
+
         record.setDisable(true);
         record.setText("Recording...");
         close.setDisable(true);
+        Thread timerThread = new Thread(new timerShow());
+        timerThread.start();
         Thread thread = new Thread(new createAudioFile());
         thread.start();
         record.setVisible(false);
         Thread buttonThread = new Thread(new showButtons());
         buttonThread.start();
 
+    }
+
+    private class timerShow extends Task<Void> {
+
+        @Override
+        protected Void call() throws Exception {
+            int i = 5;
+            loaderText.setText("");
+            while (i>0) {
+                loaderText.setText(loaderText.getText() + Integer.toString(i) + "...");
+                Thread.sleep(1000);
+                i-=1;
+            }
+            return null;
+        }
     }
 
     private class showButtons extends Task<Void> {
@@ -175,12 +195,9 @@ public class CreateCreation {
             e.printStackTrace();
         }
         goBack();
-
-
     }
 
     private void goBack() {
-
                 try {
                     Pane newLoadedPane = FXMLLoader.load(getClass().getResource("Home.fxml"));
                     anchorPane.getChildren().add(newLoadedPane);
@@ -188,5 +205,4 @@ public class CreateCreation {
                     JOptionPane.showMessageDialog(null, "An Error occurred while trying to continue: " + io.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
                 }
     }
-
 }

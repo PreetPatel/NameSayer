@@ -20,9 +20,10 @@ public class NameSayer extends Application {
         Parent layout = loader.load();
         Scene scene = new Scene(layout);
         primaryStage.setScene(scene);
+        primaryStage.setResizable(false);
+        primaryStage.setTitle("NameSayer");
         primaryStage.show();
     }
-
     public static void main(String[] args) {
         launch(args);
     }

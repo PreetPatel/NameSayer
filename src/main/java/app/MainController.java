@@ -8,11 +8,13 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
+
 import javax.swing.*;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -63,6 +65,7 @@ public class MainController {
 
     @FXML
     private void deletebuttonhandler() {
+
         stackPane.setVisible(true);
         JFXDialogLayout dialogContent = new JFXDialogLayout();
         JFXDialog deleteDialog = new JFXDialog(stackPane,dialogContent,JFXDialog.DialogTransition.CENTER);
@@ -95,92 +98,80 @@ public class MainController {
             }
         });
 
-
         dialogContent.setActions(confirmDelete);
         deleteDialog.show();
-
-    }
-
-    private boolean checkFileExists(String name) {
-        try {
-            ProcessBuilder builder = new ProcessBuilder("/bin/bash", "-c", "ls "+ NameSayer.creationsPath +" -1 | grep -i " + name + ".mp4");
-            Process process = builder.start();
-            InputStream stdout = process.getInputStream();
-            BufferedReader stdoutBuffered = new BufferedReader(new InputStreamReader(stdout));
-            String line = null;
-            if((line = stdoutBuffered.readLine()) != null ) {
-                return true;
-            } else {
-                return false;
-            }
-
-        } catch (IOException e) {
-            JOptionPane.showMessageDialog(null, "An Error occurred while trying to continue: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE); }
-        return false;
     }
 
     @FXML
     private void createButtonHandler() {
-        stackPane.setVisible(true);
-        JFXDialogLayout dialogContent = new JFXDialogLayout();
-        JFXDialog createDialog = new JFXDialog(stackPane,dialogContent,JFXDialog.DialogTransition.CENTER);
 
-        Text header = new Text("Add new Creation");
-        header.setStyle("-fx-font-size: 30; -fx-font-family: 'Lato Heavy'");
-        dialogContent.setHeading(header);
+                stackPane.setVisible(true);
+                JFXDialogLayout dialogContent = new JFXDialogLayout();
+                JFXDialog createDialog = new JFXDialog(stackPane, dialogContent, JFXDialog.DialogTransition.CENTER);
 
-        Text content = new Text("Please Enter A Name For This Creation:");
-        content.setStyle("-fx-font-size: 25; -fx-font-family: 'Lato Medium'");
-        dialogContent.setBody(content);
+                Text header = new Text("Add new Creation");
+                header.setStyle("-fx-font-size: 30; -fx-font-family: 'Lato Heavy'");
+                dialogContent.setHeading(header);
 
-        JFXTextField field = new JFXTextField();
-        field.setPromptText("Lets get started with a memorable name");
-        dialogContent.setBody(field);
-        JFXButton nextStep = new JFXButton();
-        nextStep.setDisable(true);
+                Text content = new Text("Please Enter A Name For This Creation:");
+                content.setStyle("-fx-font-size: 25; -fx-font-family: 'Lato Medium'");
+                dialogContent.setBody(content);
 
-            field.setOnKeyReleased(new EventHandler<KeyEvent>() {
-                @Override
-                public void handle(KeyEvent event) {
-                    if (!field.getText().matches("^[\\w\\-. ]+$") || field.getText().isEmpty() || checkFileExists(field.getText())) {
-                        nextStep.setDisable(true);
-                        field.setStyle("-fx-background-color: #ff4b52;");
-                        field.setPromptText("Please type a valid name");
-                    } else {
-                        field.setStyle("-fx-background-color: white;");
-                        nextStep.setDisable(false);
+                JFXTextField field = new JFXTextField();
+                field.setPromptText("Enter name here");
+                dialogContent.setBody(field);
+                JFXButton nextStep = new JFXButton();
+                nextStep.setDisable(true);
+
+                field.setOnKeyReleased(new EventHandler<KeyEvent>() {
+                    @Override
+                    public void handle(KeyEvent event) {
+
+                        String fileName = field.getText().trim();
+                        StringValidator stringValidator = new StringValidator(fileName);
+
+                        if (!stringValidator.isValid()) {
+                            nextStep.setDisable(true);
+                            field.setStyle("-fx-background-color: #ff4b52;");
+                            field.setPromptText("Please type a valid name");
+                        } else {
+                            field.setStyle("-fx-background-color: white;");
+                            nextStep.setDisable(false);
+                            if (event.getCode() == KeyCode.ENTER) {
+                                gotoCreateCreation(field.getText());
+                            }
+                        }
                     }
-                }
-            });
+                });
 
+                nextStep.setText("Next");
+                nextStep.setStyle("-fx-background-color: #03b5aa; -fx-text-fill: white; -fx-font-family: 'Lato Medium'; -fx-font-size: 25;");
+                nextStep.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent event) {
+                        gotoCreateCreation(field.getText());
+                    }
+                });
 
+                createDialog.setOnDialogClosed(new EventHandler<JFXDialogEvent>() {
+                    @Override
+                    public void handle(JFXDialogEvent event) {
+                        stackPane.setVisible(false);
+                    }
+                });
+                dialogContent.setActions(nextStep);
+                createDialog.show();
+    }
 
-        nextStep.setText("Next");
-        nextStep.setStyle("-fx-background-color: #03b5aa; -fx-text-fill: white; -fx-font-family: 'Lato Medium'; -fx-font-size: 25;");
-        nextStep.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                stackPane.setVisible(false);
-                try {
-                    CreateCreation.setNameOfCreation(field.getText());
-                    Pane newLoadedPane = FXMLLoader.load(getClass().getResource("CreateCreation.fxml"));
-                    anchorPane.getChildren().add(newLoadedPane);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-
-        createDialog.setOnDialogClosed(new EventHandler<JFXDialogEvent>() {
-            @Override
-            public void handle(JFXDialogEvent event) {
-                stackPane.setVisible(false);
-            }
-        });
-
-
-        dialogContent.setActions(nextStep);
-        createDialog.show();
+    private void gotoCreateCreation(String text) {
+        stackPane.setVisible(false);
+        try {
+            CreateCreation.setNameOfCreation(text);
+            Pane newLoadedPane = FXMLLoader.load(getClass().getResource("CreateCreation.fxml"));
+            anchorPane.getChildren().add(newLoadedPane);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "An Error occurred while trying to continue: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
 
@@ -204,6 +195,13 @@ public class MainController {
         introText.setText("Select one of the following creations to get started");
         try {
             ProcessBuilder builder = new ProcessBuilder("./src/main/resources/scripts/checkDir.sh");
+            Process process = builder.start();
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(null, "An Error occurred while trying to continue: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+
+        try {
+            ProcessBuilder builder = new ProcessBuilder("/bin/bash", "-c", "rm " + NameSayer.creationsPath +"/*_audio.*; rm " + NameSayer.creationsPath +"/*_video.*");
             Process process = builder.start();
         } catch (IOException e) {
             JOptionPane.showMessageDialog(null, "An Error occurred while trying to continue: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
