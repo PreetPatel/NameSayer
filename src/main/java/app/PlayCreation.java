@@ -3,11 +3,8 @@ package app;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXSlider;
 import javafx.beans.InvalidationListener;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.media.Media;
@@ -17,7 +14,6 @@ import javafx.scene.text.Text;
 import javafx.util.Duration;
 
 import java.io.File;
-import java.lang.reflect.InvocationTargetException;
 
 import static java.lang.Math.round;
 
@@ -52,15 +48,13 @@ public class PlayCreation {
     }
 
     public void playHandler() {
-        mediaPlayer.seek(duration);
-        System.out.println("Play :" + duration.toSeconds());
+        mediaPlayer.setStartTime(duration);
         mediaPlayer.play();
     }
 
     public void pauseHandler() {
         duration = mediaPlayer.getCurrentTime();
-        System.out.println("Pause :" + duration.toSeconds());
-        mediaPlayer.stop();
+        mediaPlayer.pause();
     }
 
     public void backHandler() throws Exception{
@@ -71,7 +65,8 @@ public class PlayCreation {
 
     @FXML
     public void initialize() {
-        String path = "library/" + mediaToPlay + ".mp4";
+        
+        String path = "/" + NameSayer.creationsPath +"/" + mediaToPlay + ".mp4";
         File file = new File(path);
         Media media = new Media(file.toURI().toString());
         mediaPlayer = new MediaPlayer(media);

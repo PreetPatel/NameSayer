@@ -13,6 +13,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
+import javax.swing.*;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -25,9 +26,6 @@ public class MainController {
 
     @FXML
     private StackPane stackPane;
-
-    @FXML
-    private Text creationNameDisplay;
 
     @FXML
     private JFXButton playButton;
@@ -55,13 +53,12 @@ public class MainController {
 
     private void deleteCreation(String creationToDelete) {
         try {
-            ProcessBuilder builder = new ProcessBuilder("/bin/bash", "-c", "rm ./library/" + creationToDelete + ".mp4");
+            ProcessBuilder builder = new ProcessBuilder("/bin/bash", "-c", "rm "+ NameSayer.creationsPath +"/'" + creationToDelete + "'.*");
             Process process = builder.start();
             loadCreationsOntoPane();
         } catch (IOException e) {
-            System.out.println(e.getMessage());
+            JOptionPane.showMessageDialog(null,"An error occurred: "+e.getMessage(),"Error",JOptionPane.ERROR_MESSAGE);
         }
-
     }
 
     @FXML
@@ -106,7 +103,7 @@ public class MainController {
 
     private boolean checkFileExists(String name) {
         try {
-            ProcessBuilder builder = new ProcessBuilder("/bin/bash", "-c", "ls ./library -1 | grep -i " + name + ".mp4");
+            ProcessBuilder builder = new ProcessBuilder("/bin/bash", "-c", "ls "+ NameSayer.creationsPath +" -1 | grep -i " + name + ".mp4");
             Process process = builder.start();
             InputStream stdout = process.getInputStream();
             BufferedReader stdoutBuffered = new BufferedReader(new InputStreamReader(stdout));
@@ -118,8 +115,7 @@ public class MainController {
             }
 
         } catch (IOException e) {
-            System.out.println(e.getMessage());
-        }
+            JOptionPane.showMessageDialog(null, "An Error occurred while trying to continue: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE); }
         return false;
     }
 
@@ -190,12 +186,11 @@ public class MainController {
 
     @FXML
     private void creationsbuttonhandler(ActionEvent e) {
-        introText.setVisible(false);
         playButton.setVisible(true);
         deleteButton.setVisible(true);
-        String text = ((JFXButton)e.getSource()).getId();
+        String text = ((JFXButton)e.getSource()).getText();
         selectedCreation = text;
-        creationNameDisplay.setText(selectedCreation);
+        introText.setText(selectedCreation);
 
 
     }
@@ -206,25 +201,27 @@ public class MainController {
         playButton.setVisible(false);
         deleteButton.setVisible(false);
         introText.setVisible(true);
+        introText.setText("Select one of the following creations to get started");
         try {
             ProcessBuilder builder = new ProcessBuilder("./src/main/resources/scripts/checkDir.sh");
             Process process = builder.start();
         } catch (IOException e) {
-            System.out.println(e.getMessage());
+            JOptionPane.showMessageDialog(null, "An Error occurred while trying to continue: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
 
         ObservableList<JFXButton> creationsList = FXCollections.<JFXButton>observableArrayList();
 
         try {
-            ProcessBuilder builder = new ProcessBuilder("/bin/bash", "-c", "ls ./library -1 | sed -e 's/\\..*$//'");
+            ProcessBuilder builder = new ProcessBuilder("/bin/bash", "-c", "ls "+ NameSayer.creationsPath +" -1 | sed -e 's/\\..*$//'");
             Process process = builder.start();
             InputStream stdout = process.getInputStream();
             InputStream stderr = process.getErrorStream();
             BufferedReader stdoutBuffered = new BufferedReader(new InputStreamReader(stdout));
-            String line = null;
+            String line;
             while ((line = stdoutBuffered.readLine()) != null )
             {
                 JFXButton button = new JFXButton();
+                button.setMnemonicParsing(false);
                 button.setText(line);
                 button.setId(line);
                 button.setStyle("-fx-background-color: #03b5aa; -fx-text-fill: white; -fx-font-family: 'Lato Medium'; -fx-font-size: 25;");
@@ -236,7 +233,7 @@ public class MainController {
 
 
         } catch (IOException e) {
-            System.out.println(e.getMessage());
+            JOptionPane.showMessageDialog(null, "An Error occurred while trying to continue: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 

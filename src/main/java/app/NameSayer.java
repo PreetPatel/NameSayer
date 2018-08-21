@@ -7,6 +7,8 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class NameSayer extends Application {
+
+    public static final String creationsPath = "~/Documents/NameSayer";
     @Override
     public void start(Stage primaryStage) throws Exception {
         loadScene("Home.fxml", primaryStage);
