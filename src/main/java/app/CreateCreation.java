@@ -30,9 +30,6 @@ public class CreateCreation {
     private AnchorPane anchorPane;
 
     @FXML
-    private AreaChart<Number,Number> ac;
-
-    @FXML
     private JFXButton listenAudio;
 
     @FXML
@@ -139,6 +136,7 @@ public class CreateCreation {
         protected Void call() throws Exception {
             ProcessBuilder builder = new ProcessBuilder("/bin/bash", "-c", "ffmpeg -t 5 -f alsa -ac 2 -i default "+ NameSayer.creationsPath +"/'"+ _nameOfCreation + "_audio.mp3'");
             Process process = builder.start();
+            
             return null;
         }
     }
