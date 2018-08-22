@@ -8,7 +8,7 @@ import javafx.stage.Stage;
 
 public class NameSayer extends Application {
 
-    public static final String creationsPath = "~/Documents/NameSayer";
+    public static final String creationsPath = System.getProperty("user.home") + "/Documents/NameSayer";
     @Override
     public void start(Stage primaryStage) throws Exception {
         loadScene("Home.fxml", primaryStage);
@@ -25,6 +25,7 @@ public class NameSayer extends Application {
         primaryStage.show();
     }
     public static void main(String[] args) {
+        System.out.println(creationsPath);
         launch(args);
     }
 }

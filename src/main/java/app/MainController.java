@@ -16,10 +16,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 
 import javax.swing.*;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 
 public class MainController {
 
@@ -193,12 +190,13 @@ public class MainController {
         deleteButton.setVisible(false);
         introText.setVisible(true);
         introText.setText("Select one of the following creations to get started");
-        try {
-            ProcessBuilder builder = new ProcessBuilder("./src/main/resources/scripts/checkDir.sh");
-            Process process = builder.start();
-        } catch (IOException e) {
-            JOptionPane.showMessageDialog(null, "An Error occurred while trying to continue: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-        }
+
+            File storage = new File(NameSayer.creationsPath);
+            if (!storage.exists()) {
+                if (!storage.mkdirs()) {
+                    JOptionPane.showMessageDialog(null, "An Error occurred while trying to load creations ", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            }
 
         try {
             ProcessBuilder builder = new ProcessBuilder("/bin/bash", "-c", "rm " + NameSayer.creationsPath +"/*_audio.*; rm " + NameSayer.creationsPath +"/*_video.*");

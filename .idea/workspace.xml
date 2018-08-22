@@ -2,8 +2,21 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="84c81bab-4206-442e-8165-92b106b2af07" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/jfoenix_8_0_7.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/app/CreateCreation$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/app/CreateCreation$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/app/CreateCreation$createAudioFile.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/app/CreateCreation$createAudioFile.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/app/CreateCreation$deleteAudioFile.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/app/CreateCreation$deleteAudioFile.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/app/CreateCreation$playAudioFile$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/app/CreateCreation$playAudioFile$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/app/CreateCreation$playAudioFile.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/app/CreateCreation$playAudioFile.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/app/CreateCreation$showButtons.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/app/CreateCreation$showButtons.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/app/CreateCreation.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/app/CreateCreation.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/app/MainController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/app/MainController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/app/NameSayer.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/app/NameSayer.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/app/PlayCreation.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/app/PlayCreation.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/app/CreateCreation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/CreateCreation.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/app/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/MainController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/app/NameSayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/NameSayer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/scripts/checkDir.sh" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/scripts/checkDir.sh" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.gradle/" />
     <ignored path="$PROJECT_DIR$/build/" />
@@ -23,45 +36,93 @@
     <session id="-75796529">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="3" />
+          <entry key="project.closed" value="4" />
+          <entry key="project.open.time.10" value="1" />
           <entry key="project.open.time.19" value="1" />
           <entry key="project.open.time.2" value="1" />
           <entry key="project.open.time.4" value="1" />
-          <entry key="project.opened" value="4" />
+          <entry key="project.opened" value="5" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="java" value="3" />
+          <entry key="java" value="6" />
+          <entry key="sh" value="1" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="JAVA" value="3" />
+          <entry key="JAVA" value="6" />
+          <entry key="PLAIN_TEXT" value="1" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="java" value="99" />
+          <entry key="java" value="333" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JAVA" value="99" />
+          <entry key="JAVA" value="333" />
         </counts>
       </usages-collector>
     </session>
   </component>
   <component name="FileEditorManager">
-    <leaf>
-      <file pinned="false" current-in-tab="true">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/app/CreateCreation.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="106">
-              <caret line="45" column="21" lean-forward="true" selection-start-line="45" selection-start-column="21" selection-end-line="45" selection-end-column="21" />
+            <state relative-caret-position="-158">
+              <caret line="178" column="28" selection-start-line="178" selection-start-column="28" selection-end-line="178" selection-end-column="28" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/app/MainController.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="150">
+              <caret line="213" column="58" lean-forward="true" selection-start-line="213" selection-start-column="58" selection-end-line="213" selection-end-column="58" />
+              <folding>
+                <element signature="e#7947#7958#0" expanded="true" />
+                <element signature="e#9120#9121#0" expanded="true" />
+                <element signature="e#9159#9160#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/app/StringValidator.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="23">
+              <caret line="17" column="40" selection-start-line="17" selection-start-column="40" selection-end-line="17" selection-end-column="40" />
+              <folding>
+                <element signature="e#263#264#0" expanded="true" />
+                <element signature="e#298#299#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/app/NameSayer.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="308">
+              <caret line="24" column="28" lean-forward="true" selection-start-line="24" selection-start-column="28" selection-end-line="24" selection-end-column="28" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/resources/scripts/checkDir.sh">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="115">
+              <caret line="5" lean-forward="true" selection-start-line="5" selection-end-line="5" />
             </state>
           </provider>
         </entry>
@@ -293,7 +354,7 @@
       <map>
         <entry key="$PROJECT_DIR$" value="6139341400000" />
         <entry key="$PROJECT_DIR$/.gradle" value="0" />
-        <entry key="$PROJECT_DIR$/build.gradle" value="3790190557" />
+        <entry key="$PROJECT_DIR$/build.gradle" value="2297444703" />
         <entry key="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" value="2083459160" />
         <entry key="$PROJECT_DIR$/settings.gradle" value="855122166" />
       </map>
@@ -476,7 +537,10 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
+        <option value="$PROJECT_DIR$/src/main/resources/scripts/checkDir.sh" />
+        <option value="$PROJECT_DIR$/src/main/java/app/NameSayer.java" />
         <option value="$PROJECT_DIR$/src/main/java/app/CreateCreation.java" />
+        <option value="$PROJECT_DIR$/src/main/java/app/MainController.java" />
       </list>
     </option>
   </component>
@@ -505,7 +569,9 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="AndroidView" />
       <pane id="PackagesPane" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -566,8 +632,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
-      <pane id="AndroidView" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -626,18 +690,19 @@
       <updated>1534778016854</updated>
       <workItem from="1534778019479" duration="1253000" />
       <workItem from="1534892603361" duration="22000" />
-      <workItem from="1534892747209" duration="168000" />
+      <workItem from="1534892747209" duration="2930000" />
+      <workItem from="1534899474742" duration="1827000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1443000" />
+    <option name="totallyTimeSpent" value="6032000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1440" height="877" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25679544" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.26037195" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Designer" order="2" />
       <window_info id="Image Layers" order="3" />
@@ -646,7 +711,7 @@
       <window_info id="Capture Tool" order="6" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.32769832" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.16384916" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -676,23 +741,49 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/src/main/resources/scripts/checkDir.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="115">
+          <caret line="5" lean-forward="true" selection-start-line="5" selection-end-line="5" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/app/NameSayer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="437">
-          <caret line="23" column="29" selection-start-line="23" selection-start-column="29" selection-end-line="23" selection-end-column="29" />
+        <state relative-caret-position="308">
+          <caret line="24" column="28" lean-forward="true" selection-start-line="24" selection-start-column="28" selection-end-line="24" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/app/StringValidator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="23">
+          <caret line="17" column="40" selection-start-line="17" selection-start-column="40" selection-end-line="17" selection-end-column="40" />
           <folding>
-            <element signature="e#728#729#0" expanded="true" />
-            <element signature="e#756#757#0" expanded="true" />
+            <element signature="e#263#264#0" expanded="true" />
+            <element signature="e#298#299#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/app/CreateCreation.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="106">
-          <caret line="45" column="21" lean-forward="true" selection-start-line="45" selection-start-column="21" selection-end-line="45" selection-end-column="21" />
+        <state relative-caret-position="-158">
+          <caret line="178" column="28" selection-start-line="178" selection-start-column="28" selection-end-line="178" selection-end-column="28" />
           <folding>
             <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/app/MainController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="213" column="58" lean-forward="true" selection-start-line="213" selection-start-column="58" selection-end-line="213" selection-end-column="58" />
+          <folding>
+            <element signature="e#7947#7958#0" expanded="true" />
+            <element signature="e#9120#9121#0" expanded="true" />
+            <element signature="e#9159#9160#0" expanded="true" />
           </folding>
         </state>
       </provider>

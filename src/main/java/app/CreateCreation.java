@@ -116,7 +116,7 @@ public class CreateCreation {
 
         @Override
         protected Void call() {
-            String path = "/"+ NameSayer.creationsPath +"/" + _nameOfCreation + "_audio.mp3";
+            String path =  NameSayer.creationsPath +"/" + _nameOfCreation + "_audio.mp3";
             File file = new File(path);
             Media media = new Media(file.toURI().toString());
             mediaPlayer = new MediaPlayer(media);
@@ -136,7 +136,6 @@ public class CreateCreation {
         protected Void call() throws Exception {
             ProcessBuilder builder = new ProcessBuilder("/bin/bash", "-c", "ffmpeg -t 5 -f alsa -ac 2 -i default "+ NameSayer.creationsPath +"/'"+ _nameOfCreation + "_audio.mp3'");
             Process process = builder.start();
-            
             return null;
         }
     }
@@ -174,7 +173,7 @@ public class CreateCreation {
             public Void call() throws Exception {
                 String command = "ffmpeg -f lavfi -i color=c=white:s=1920x1080:d=5 -vf \"drawtext=fontsize=60: " +
                         "fontcolor=black:x=(w-text_w)/2:y=(h-text_h)/2:text='" + _nameOfCreation +"'\" "+ NameSayer.creationsPath +"/'"+ _nameOfCreation +"_video.mp4' 2>/dev/null && " +
-                        "ffmpeg -i "+ NameSayer.creationsPath +"/'"+ _nameOfCreation +"_video.mp4' -i "+ NameSayer.creationsPath +"/'"+ _nameOfCreation +"_audio.mp3' -codec copy -shortest " +
+                        "ffmpeg -i "+ NameSayer.creationsPath +"/'"+ _nameOfCreation +"_video.mp4' -i ~"+ NameSayer.creationsPath +"/'"+ _nameOfCreation +"_audio.mp3' -codec copy -shortest " +
                         ""+ NameSayer.creationsPath +"/'"+ _nameOfCreation +".mp4' 2> /dev/null && " +
                         "rm "+ NameSayer.creationsPath +"/'"+ _nameOfCreation +"_video.mp4' 2>/dev/null && " +
                         "rm "+ NameSayer.creationsPath +"/'"+ _nameOfCreation +"_audio.mp3' 2>/dev/null";
