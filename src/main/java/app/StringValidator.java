@@ -27,7 +27,7 @@ public class StringValidator {
 
     private boolean checkFileExists(String name) {
         try {
-            ProcessBuilder builder = new ProcessBuilder("/bin/bash", "-c", "ls "+ NameSayer.creationsPath +" -1 | grep -i " + name + ".mp4");
+            ProcessBuilder builder = new ProcessBuilder("/bin/bash", "-c", "ls $HOME/Documents/NameSayer/ -1 | grep -i " + name + ".mp4");
             Process process = builder.start();
             InputStream stdout = process.getInputStream();
             BufferedReader stdoutBuffered = new BufferedReader(new InputStreamReader(stdout));

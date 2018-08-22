@@ -52,7 +52,7 @@ public class MainController {
 
     private void deleteCreation(String creationToDelete) {
         try {
-            ProcessBuilder builder = new ProcessBuilder("/bin/bash", "-c", "rm "+ NameSayer.creationsPath +"/'" + creationToDelete + "'.*");
+            ProcessBuilder builder = new ProcessBuilder("/bin/bash", "-c", "rm $HOME/Documents/NameSayer/'" + creationToDelete + "'.*");
             Process process = builder.start();
             loadCreationsOntoPane();
         } catch (IOException e) {
@@ -199,7 +199,7 @@ public class MainController {
             }
 
         try {
-            ProcessBuilder builder = new ProcessBuilder("/bin/bash", "-c", "rm " + NameSayer.creationsPath +"/*_audio.*; rm " + NameSayer.creationsPath +"/*_video.*");
+            ProcessBuilder builder = new ProcessBuilder("/bin/bash", "-c", "rm $HOME/Documents/NameSayer/*_audio.*; rm $HOME/Documents/NameSayer/*_video.*");
             Process process = builder.start();
         } catch (IOException e) {
             JOptionPane.showMessageDialog(null, "An Error occurred while trying to continue: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
@@ -208,7 +208,7 @@ public class MainController {
         ObservableList<JFXButton> creationsList = FXCollections.<JFXButton>observableArrayList();
 
         try {
-            ProcessBuilder builder = new ProcessBuilder("/bin/bash", "-c", "ls "+ NameSayer.creationsPath +" -1 | sed -e 's/\\..*$//'");
+            ProcessBuilder builder = new ProcessBuilder("/bin/bash", "-c", "ls $HOME/Documents/NameSayer/ -1 | sed -e 's/\\..*$//'");
             Process process = builder.start();
             InputStream stdout = process.getInputStream();
             InputStream stderr = process.getErrorStream();

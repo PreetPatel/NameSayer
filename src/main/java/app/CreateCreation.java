@@ -4,7 +4,6 @@ import com.jfoenix.controls.JFXButton;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.chart.AreaChart;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.media.Media;
@@ -134,7 +133,7 @@ public class CreateCreation {
 
         @Override
         protected Void call() throws Exception {
-            ProcessBuilder builder = new ProcessBuilder("/bin/bash", "-c", "ffmpeg -t 5 -f alsa -ac 2 -i default "+ NameSayer.creationsPath +"/'"+ _nameOfCreation + "_audio.mp3'");
+            ProcessBuilder builder = new ProcessBuilder("/bin/bash", "-c", "ffmpeg -t 5 -f alsa -ac 2 -i default $HOME/Documents/NameSayer/'"+ _nameOfCreation + "_audio.mp3'");
             Process process = builder.start();
             return null;
         }
@@ -155,7 +154,7 @@ public class CreateCreation {
 
         @Override
         protected Void call() throws Exception {
-            ProcessBuilder builder = new ProcessBuilder("/bin/bash", "-c", "rm "+ NameSayer.creationsPath +"/'"+ _nameOfCreation + "_audio.mp3'");
+            ProcessBuilder builder = new ProcessBuilder("/bin/bash", "-c", "rm $HOME/Documents/NameSayer/'"+ _nameOfCreation + "_audio.mp3'");
             Process process = builder.start();
             return null;
         }
@@ -172,11 +171,11 @@ public class CreateCreation {
             @Override
             public Void call() throws Exception {
                 String command = "ffmpeg -f lavfi -i color=c=white:s=1920x1080:d=5 -vf \"drawtext=fontsize=60: " +
-                        "fontcolor=black:x=(w-text_w)/2:y=(h-text_h)/2:text='" + _nameOfCreation +"'\" "+ NameSayer.creationsPath +"/'"+ _nameOfCreation +"_video.mp4' 2>/dev/null && " +
-                        "ffmpeg -i "+ NameSayer.creationsPath +"/'"+ _nameOfCreation +"_video.mp4' -i ~"+ NameSayer.creationsPath +"/'"+ _nameOfCreation +"_audio.mp3' -codec copy -shortest " +
-                        ""+ NameSayer.creationsPath +"/'"+ _nameOfCreation +".mp4' 2> /dev/null && " +
-                        "rm "+ NameSayer.creationsPath +"/'"+ _nameOfCreation +"_video.mp4' 2>/dev/null && " +
-                        "rm "+ NameSayer.creationsPath +"/'"+ _nameOfCreation +"_audio.mp3' 2>/dev/null";
+                        "fontcolor=black:x=(w-text_w)/2:y=(h-text_h)/2:text='" + _nameOfCreation +"'\" $HOME/Documents/NameSayer/'"+ _nameOfCreation +"_video.mp4' 2>/dev/null && " +
+                        "ffmpeg -i $HOME/Documents/NameSayer/'"+ _nameOfCreation +"_video.mp4' -i $HOME/Documents/NameSayer/'"+ _nameOfCreation +"_audio.mp3' -codec copy -shortest " +
+                        "$HOME/Documents/NameSayer/'"+ _nameOfCreation +".mp4' 2> /dev/null && " +
+                        "rm $HOME/Documents/NameSayer/'"+ _nameOfCreation +"_video.mp4' 2>/dev/null && " +
+                        "rm $HOME/Documents/NameSayer/'"+ _nameOfCreation +"_audio.mp3' 2>/dev/null";
                 ProcessBuilder builder = new ProcessBuilder("/bin/bash", "-c", command);
                 Process process = builder.start();
                 process.waitFor();
