@@ -89,7 +89,7 @@ public class PlayCreation {
     @FXML
     public void initialize() {
 
-        String path = "/" + NameSayer.creationsPath +"/" + mediaToPlay + ".mp4";
+        String path = NameSayer.creationsPath +"/" + mediaToPlay + ".mp4";
         File file = new File(path);
        try {
             Media media = new Media(file.toURI().toString());

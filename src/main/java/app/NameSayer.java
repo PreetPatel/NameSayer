@@ -25,7 +25,6 @@ public class NameSayer extends Application {
         primaryStage.show();
     }
     public static void main(String[] args) {
-        System.out.println(creationsPath);
         launch(args);
     }
 }
