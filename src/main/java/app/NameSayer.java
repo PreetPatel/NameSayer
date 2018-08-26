@@ -17,15 +17,19 @@ import javafx.stage.Stage;
 
 public class NameSayer extends Application {
 
+    public static void main(String[] args) {
+        launch(args);
+    }
+
     /** Path for storing universal creations */
     public static final String creationsPath = System.getProperty("user.home") + "/Documents/NameSayer";
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        loadScene("Home.fxml", primaryStage);
+        loadScene("HomeViewController.fxml", primaryStage);
     }
 
-    /** Loads FXML onto the scene and renders the first scene: MainController.java */
+    /** Loads FXML onto the scene and renders the first scene: HomeViewController.java */
     public void loadScene(String source, Stage primaryStage) throws Exception {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(this.getClass().getResource(source));
@@ -37,7 +41,5 @@ public class NameSayer extends Application {
         primaryStage.show();
     }
 
-    public static void main(String[] args) {
-        launch(args);
-    }
+
 }

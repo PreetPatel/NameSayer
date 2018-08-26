@@ -1,5 +1,5 @@
 /**
- * PlayCreation.java
+ * PlayViewController.java
  * Scene for playing a selected creation
  *
  * Copyright Preet Patel, 2018
@@ -30,7 +30,7 @@ import java.io.IOException;
 
 import static java.lang.Math.round;
 
-public class PlayCreation {
+public class PlayViewController {
 
     @FXML
     private AnchorPane anchorPane;
@@ -64,6 +64,7 @@ public class PlayCreation {
      */
     public void playHandler() {
         mediaPlayer.setStartTime(duration);
+        videoslider.valueProperty().setValue(duration.toSeconds());
         mediaPlayer.play();
         mediaPlayer.getStatus();
         playButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -102,7 +103,7 @@ public class PlayCreation {
         }
         Pane newLoadedPane = null;
         try {
-            newLoadedPane = FXMLLoader.load(getClass().getResource("Home.fxml"));
+            newLoadedPane = FXMLLoader.load(getClass().getResource("HomeViewController.fxml"));
         } catch (IOException e) {
             JOptionPane.showMessageDialog(null, "An Error occurred while trying to continue: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 

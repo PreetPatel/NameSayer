@@ -2,5 +2,5 @@
 <classpath>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/jfoenix-8.0.7"/>
-	<classpathentry kind="output" path="/classes/production/preetpatel"/>
+	<classpathentry kind="output" path="classes/production/preetpatel"/>
 </classpath>

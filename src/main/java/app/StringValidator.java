@@ -11,21 +11,24 @@
 package app;
 
 import javax.swing.*;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 
 public class StringValidator {
 
     private String fileName;
+
     public StringValidator(String filename) {
         fileName = filename;
     }
 
+    /**
+     * Checks for if the string is valid for being a file name. Accepted characters include:
+     * A-Z, a-z, (Spaces), hyphens
+     * @return Returns true if the string is valid
+     */
     public boolean isValid() {
         boolean invalidName = fileName.contains("_audio") || fileName.contains("_video");
-        boolean validInput = fileName.matches("^[\\w\\-. ]+$");
+        boolean validInput = fileName.matches("^[\\w\\- ]+$");
         boolean empty = fileName.isEmpty();
         boolean fileExists = checkFileExists();
         if (!validInput || empty || fileExists || invalidName) {
@@ -35,25 +38,25 @@ public class StringValidator {
         }
     }
 
+    /**
+     * Checks if a file with the filename exists. The files are checked in the
+     * creations path provided in the NameSayer.java class.
+     * @return true if file exists; otherwise false.
+     */
     public boolean checkFileExists() {
-        try {
-            ProcessBuilder builder = new ProcessBuilder("/bin/bash", "-c", "ls " + NameSayer.creationsPath +"/ -1 | grep -i '" + fileName + ".mp4'");
-            Process process = builder.start();
-            InputStream stdout = process.getInputStream();
-            BufferedReader stdoutBuffered = new BufferedReader(new InputStreamReader(stdout));
-            String line = null;
-            if((line = stdoutBuffered.readLine()) != null && !fileName.equalsIgnoreCase("")) {
-                return true;
-            } else {
-                return false;
+            File file = new File(NameSayer.creationsPath);
+            for (String check : file.list()) {
+                if((fileName + ".mp4").equalsIgnoreCase(check)) {
+                    return true;
+                }
             }
-
-        } catch (IOException e) {
-            JOptionPane.showMessageDialog(null, "An Error occurred while trying to continue: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-        }
-        return false;
+            return false;
     }
 
+    /**
+     * Deletes the file from the creations path via a bash command
+     * Opens a dialog box if an error occurs during the deletion process
+     */
     public void deleteFile() {
         if (checkFileExists()) {
             try {

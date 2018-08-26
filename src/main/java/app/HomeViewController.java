@@ -1,5 +1,5 @@
 /**
- * MainController.java
+ * HomeViewController.java
  * Main Menu Class. Displays the home screen for Namesayer
  *
  * Copyright Preet Patel, 2018
@@ -27,7 +27,7 @@ import javafx.scene.text.Text;
 import javax.swing.*;
 import java.io.*;
 
-public class MainController {
+public class HomeViewController {
 
     @FXML
     private AnchorPane anchorPane;
@@ -54,15 +54,15 @@ public class MainController {
 
     /**
      * Play button event handler.
-     * Loads a new PlayCreation scene onto the same stage.
+     * Loads a new PlayViewController scene onto the same stage.
      * @throws Exception
      */
     @FXML
     private void playButtonHandler(ActionEvent e) {
 
-        PlayCreation.setMediaToPlay(selectedCreation);
+        PlayViewController.setMediaToPlay(selectedCreation);
         try {
-            Pane newLoadedPane = FXMLLoader.load(getClass().getResource("PlayCreation.fxml"));
+            Pane newLoadedPane = FXMLLoader.load(getClass().getResource("PlayViewController.fxml"));
             anchorPane.getChildren().add(newLoadedPane);
         } catch (IOException err) {
             JOptionPane.showMessageDialog(null,"An error occurred: "+err.getMessage(),"Error",JOptionPane.ERROR_MESSAGE);
@@ -167,7 +167,11 @@ public class MainController {
                         String fileName = field.getText().trim();
                         StringValidator stringValidator = new StringValidator(fileName);
 
-                        if (!stringValidator.isValid()) {
+                        if(field.getText().length() > 25) {
+                            nextStep.setDisable(true);
+                            field.setStyle("-fx-background-color: #ff4b52;");
+                            dialogHeader.setText("Keep it short. Try abbreviations");
+                        } else if (!stringValidator.isValid()) {
                             nextStep.setDisable(true);
                             field.setStyle("-fx-background-color: #ff4b52;");
                             dialogHeader.setText("Please type a valid name");
@@ -208,14 +212,14 @@ public class MainController {
     }
 
     /**
-     * loads the CreateCreation.java view on the same stage to continue with recording
+     * loads the NewCreationViewController.java view on the same stage to continue with recording
      * @param text a string that is the name of the file being created without any file extensions.
      */
     private void loadCreateCreationView(String text) {
         stackPane.setVisible(false);
         try {
-            CreateCreation.setNameOfCreation(text);
-            Pane newLoadedPane = FXMLLoader.load(getClass().getResource("CreateCreation.fxml"));
+            NewCreationViewController.setNameOfCreation(text);
+            Pane newLoadedPane = FXMLLoader.load(getClass().getResource("NewCreationViewController.fxml"));
             anchorPane.getChildren().add(newLoadedPane);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "An Error occurred while trying to continue: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
@@ -247,7 +251,7 @@ public class MainController {
         playButton.setVisible(false);
         deleteButton.setVisible(false);
         introText.setVisible(true);
-        introText.setText("Select one of the following creations to get started");
+        introText.setText("Select a Creation");
 
             File storage = new File(NameSayer.creationsPath);
             if (!storage.exists()) {

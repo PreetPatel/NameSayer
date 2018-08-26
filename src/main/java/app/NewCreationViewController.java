@@ -1,3 +1,12 @@
+/**
+ * NewCreationViewController.java
+ * Scene for generating a new creation. Loads the initial pre-recording state
+ *
+ * Copyright Preet Patel, 2018
+ * @Author Preet Patel
+ * Date Created: 13 August, 2018
+ */
+
 package app;
 
 import com.jfoenix.controls.JFXButton;
@@ -14,7 +23,7 @@ import javax.swing.*;
 import java.io.File;
 import java.io.IOException;
 
-public class CreateCreation {
+public class NewCreationViewController {
 
     @FXML
     private JFXButton close;
@@ -47,7 +56,7 @@ public class CreateCreation {
 
     @FXML
     private void handleCloseButton() throws Exception{
-        Pane newLoadedPane =  FXMLLoader.load(getClass().getResource("Home.fxml"));
+        Pane newLoadedPane =  FXMLLoader.load(getClass().getResource("HomeViewController.fxml"));
         anchorPane.getChildren().add(newLoadedPane);
     }
 
@@ -150,7 +159,7 @@ public class CreateCreation {
         }
         Thread deleteAudio = new Thread(new deleteAudioFile());
         deleteAudio.start();
-        Pane newLoadedPane =  FXMLLoader.load(getClass().getResource("CreateCreation.fxml"));
+        Pane newLoadedPane =  FXMLLoader.load(getClass().getResource("NewCreationViewController.fxml"));
         anchorPane.getChildren().add(newLoadedPane);
     }
 
@@ -199,7 +208,7 @@ public class CreateCreation {
 
     private void goBack() {
                 try {
-                    Pane newLoadedPane = FXMLLoader.load(getClass().getResource("Home.fxml"));
+                    Pane newLoadedPane = FXMLLoader.load(getClass().getResource("HomeViewController.fxml"));
                     anchorPane.getChildren().add(newLoadedPane);
                 } catch (IOException io) {
                     JOptionPane.showMessageDialog(null, "An Error occurred while trying to continue: " + io.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
