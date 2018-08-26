@@ -54,6 +54,10 @@ public class CreateCreation {
 
     @FXML
     private void initialize() {
+        StringValidator validate = new StringValidator(_nameOfCreation);
+        if (!validate.isValid()) {
+            validate.deleteFile();
+        }
         loaderText.setText("Press the button below and pronounce the name: \"" + _nameOfCreation + "\"");
         listenAudio.setVisible(false);
         keepAudio.setVisible(false);

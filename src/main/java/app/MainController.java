@@ -1,3 +1,12 @@
+/**
+ * MainController.java
+ * Main Menu Class. Displays the home screen for Namesayer
+ *
+ * Copyright Preet Patel, 2018
+ * @Author Preet Patel
+ * Date Created: 13 August, 2018
+ */
+
 package app;
 
 import com.jfoenix.controls.*;
@@ -33,6 +42,9 @@ public class MainController {
     private JFXButton deleteButton;
 
     @FXML
+    private JFXButton newCreationButton;
+
+    @FXML
     private Text introText;
 
     @FXML
@@ -40,16 +52,30 @@ public class MainController {
 
     private String selectedCreation;
 
+    /**
+     * Play button event handler.
+     * Loads a new PlayCreation scene onto the same stage.
+     * @throws Exception
+     */
     @FXML
-    private void playbuttonhandler() throws Exception{
+    private void playButtonHandler(ActionEvent e) {
 
         PlayCreation.setMediaToPlay(selectedCreation);
+        try {
+            Pane newLoadedPane = FXMLLoader.load(getClass().getResource("PlayCreation.fxml"));
+            anchorPane.getChildren().add(newLoadedPane);
+        } catch (IOException err) {
+            JOptionPane.showMessageDialog(null,"An error occurred: "+err.getMessage(),"Error",JOptionPane.ERROR_MESSAGE);
 
-        Pane newLoadedPane =  FXMLLoader.load(getClass().getResource("PlayCreation.fxml"));
-        anchorPane.getChildren().add(newLoadedPane);
+        }
 
     }
 
+    /**
+     * Deletes the .mp4 file from the creations directory. Runs a bash command to remove a creation from the
+     * creations folder
+     * @param creationToDelete String for the file to delete.
+     */
     private void deleteCreation(String creationToDelete) {
         try {
             ProcessBuilder builder = new ProcessBuilder("/bin/bash", "-c", "rm " + NameSayer.creationsPath +"/'" + creationToDelete + "'.*");
@@ -60,8 +86,14 @@ public class MainController {
         }
     }
 
+    /**
+     * Delete button event handler.
+     * Creates a modal dialog to confirm file deletion. Calls the deleteCreation method on the
+     * file selected to be removed.
+     * @link #deleteCreation
+     */
     @FXML
-    private void deletebuttonhandler() {
+    private void deleteButtonHandler(ActionEvent e) {
 
         stackPane.setVisible(true);
         JFXDialogLayout dialogContent = new JFXDialogLayout();
@@ -99,16 +131,23 @@ public class MainController {
         deleteDialog.show();
     }
 
+    /**
+     * Create button event handler
+     * Creates a modal dialog for generating a new creation.
+     * Modal checks for valid file names and existing file names
+     * If an invalid string is entered, the modal text field turns red
+     * If a creation exists with that name, an override button appears
+     */
     @FXML
-    private void createButtonHandler() {
+    private void createButtonHandler(ActionEvent e) {
 
                 stackPane.setVisible(true);
                 JFXDialogLayout dialogContent = new JFXDialogLayout();
                 JFXDialog createDialog = new JFXDialog(stackPane, dialogContent, JFXDialog.DialogTransition.CENTER);
 
-                Text header = new Text("Add new Creation");
-                header.setStyle("-fx-font-size: 30; -fx-font-family: 'Lato Heavy'");
-                dialogContent.setHeading(header);
+                Text dialogHeader = new Text("Add new Creation");
+                dialogHeader.setStyle("-fx-font-size: 30; -fx-font-family: 'Lato Heavy'");
+                dialogContent.setHeading(dialogHeader);
 
                 Text content = new Text("Please Enter A Name For This Creation:");
                 content.setStyle("-fx-font-size: 25; -fx-font-family: 'Lato Medium'");
@@ -123,19 +162,27 @@ public class MainController {
                 field.setOnKeyReleased(new EventHandler<KeyEvent>() {
                     @Override
                     public void handle(KeyEvent event) {
-
+                        nextStep.setText("Next");
+                        dialogHeader.setText("Add new Creation");
                         String fileName = field.getText().trim();
                         StringValidator stringValidator = new StringValidator(fileName);
 
                         if (!stringValidator.isValid()) {
                             nextStep.setDisable(true);
                             field.setStyle("-fx-background-color: #ff4b52;");
-                            field.setPromptText("Please type a valid name");
+                            dialogHeader.setText("Please type a valid name");
+
+                            //Checks if file already exists and sets override option button
+                            if (stringValidator.checkFileExists()) {
+                                dialogHeader.setText("Creation already exists");
+                                nextStep.setDisable(false);
+                                nextStep.setText("Override Creation");
+                            }
                         } else {
                             field.setStyle("-fx-background-color: white;");
                             nextStep.setDisable(false);
                             if (event.getCode() == KeyCode.ENTER) {
-                                gotoCreateCreation(field.getText());
+                                loadCreateCreationView(field.getText());
                             }
                         }
                     }
@@ -146,7 +193,7 @@ public class MainController {
                 nextStep.setOnAction(new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(ActionEvent event) {
-                        gotoCreateCreation(field.getText());
+                        loadCreateCreationView(field.getText());
                     }
                 });
 
@@ -160,7 +207,11 @@ public class MainController {
                 createDialog.show();
     }
 
-    private void gotoCreateCreation(String text) {
+    /**
+     * loads the CreateCreation.java view on the same stage to continue with recording
+     * @param text a string that is the name of the file being created without any file extensions.
+     */
+    private void loadCreateCreationView(String text) {
         stackPane.setVisible(false);
         try {
             CreateCreation.setNameOfCreation(text);
@@ -172,17 +223,24 @@ public class MainController {
     }
 
 
+    /**
+     * Button handler for selecting any creation on the list of creations.
+     * Sets play and delete buttons to visible
+     * Sets introText to match the name of creations
+     * @param e
+     */
     @FXML
-    private void creationsbuttonhandler(ActionEvent e) {
+    private void existingCreationButtonHandler(ActionEvent e) {
         playButton.setVisible(true);
         deleteButton.setVisible(true);
-        String text = ((JFXButton)e.getSource()).getText();
-        selectedCreation = text;
+        selectedCreation = ((JFXButton)e.getSource()).getText();
         introText.setText(selectedCreation);
-
-
     }
 
+    /**
+     * Sets elements onto stage and loads creations from the creations folder defined in Namesayer.creationsPath
+     * If the folder does not exist, creates a new folder for storing creations
+     */
     private void loadCreationsOntoPane() {
         creationsPane.getChildren().clear();
         stackPane.setVisible(false);
@@ -198,6 +256,7 @@ public class MainController {
                 }
             }
 
+        // Removes any temporary files left in the creations folder due to unhandled disposals or other errors
         try {
             ProcessBuilder builder = new ProcessBuilder("/bin/bash", "-c", "rm " + NameSayer.creationsPath +"/*_audio.*; rm " + NameSayer.creationsPath +"/*_video.*");
             Process process = builder.start();
@@ -205,13 +264,12 @@ public class MainController {
             JOptionPane.showMessageDialog(null, "An Error occurred while trying to continue: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
 
+        //Loads all creations onto view
         ObservableList<JFXButton> creationsList = FXCollections.<JFXButton>observableArrayList();
-
         try {
             ProcessBuilder builder = new ProcessBuilder("/bin/bash", "-c", "ls " + NameSayer.creationsPath +"/ -1 | sed -e 's/\\..*$//'");
             Process process = builder.start();
             InputStream stdout = process.getInputStream();
-            InputStream stderr = process.getErrorStream();
             BufferedReader stdoutBuffered = new BufferedReader(new InputStreamReader(stdout));
             String line;
             while ((line = stdoutBuffered.readLine()) != null )
@@ -221,7 +279,7 @@ public class MainController {
                 button.setText(line);
                 button.setId(line);
                 button.setStyle("-fx-background-color: #03b5aa; -fx-text-fill: white; -fx-font-family: 'Lato Medium'; -fx-font-size: 25;");
-                button.setOnAction(this::creationsbuttonhandler);
+                button.setOnAction(this::existingCreationButtonHandler);
                 creationsList.add(button);
 
             }
@@ -231,8 +289,17 @@ public class MainController {
         } catch (IOException e) {
             JOptionPane.showMessageDialog(null, "An Error occurred while trying to continue: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
+
+        //Sets handlers for buttons
+        playButton.setOnAction(this::playButtonHandler);
+        deleteButton.setOnAction(this::deleteButtonHandler);
+        newCreationButton.setOnAction(this::createButtonHandler);
     }
 
+    /**
+     * Method that calls loadCreationsOntoPane() method.
+     * This method exists due to being required by JavaFX
+     */
     @FXML
     private void initialize() {
         loadCreationsOntoPane();

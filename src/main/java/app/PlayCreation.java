@@ -1,3 +1,12 @@
+/**
+ * PlayCreation.java
+ * Scene for playing a selected creation
+ *
+ * Copyright Preet Patel, 2018
+ * @Author Preet Patel
+ * Date Created: 13 August, 2018
+ */
+
 package app;
 
 import com.jfoenix.controls.JFXButton;
@@ -48,9 +57,15 @@ public class PlayCreation {
         mediaToPlay = media;
     }
 
+    /**
+     * Button handler for the play button
+     * Pauses the video and sets button text to pause
+     * Set event handler to pauseHandler()
+     */
     public void playHandler() {
         mediaPlayer.setStartTime(duration);
         mediaPlayer.play();
+        mediaPlayer.getStatus();
         playButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -60,6 +75,11 @@ public class PlayCreation {
         playButton.setText("PAUSE");
     }
 
+    /**
+     * Button handler for pause button
+     * Plays video and sets button to play
+     * Set event handler to playHandler()
+     */
     public void pauseHandler() {
         duration = mediaPlayer.getCurrentTime();
         mediaPlayer.pause();
@@ -72,6 +92,10 @@ public class PlayCreation {
         playButton.setText("PLAY");
     }
 
+    /**
+     * Button handler for back button.
+     * Stops media playback and changes scene to the Main Menu
+     */
     public void backHandler() {
         if (mediaPlayer != null) {
             mediaPlayer.stop();
@@ -86,8 +110,18 @@ public class PlayCreation {
         anchorPane.getChildren().add(newLoadedPane);
     }
 
+    /**
+     * Initializes the Play Creation scene
+     * Sets buttons for controlling the video
+     * Loads the creation onto a media player and starts playing the video
+     * The mediaToPlay variable must be set before loading playCreation
+     */
     @FXML
     public void initialize() {
+
+        if (mediaToPlay.isEmpty()) {
+            throw new RuntimeException("No media set to play");
+        }
 
         String path = NameSayer.creationsPath +"/" + mediaToPlay + ".mp4";
         File file = new File(path);

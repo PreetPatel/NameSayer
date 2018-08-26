@@ -18,7 +18,7 @@
             </Text>
          </children>
       </AnchorPane>
-      <JFXButton alignment="CENTER" buttonType="RAISED" layoutX="962.0" layoutY="707.0" onAction="#createButtonHandler" prefHeight="68.0" prefWidth="212.0" ripplerFill="#023436" style="-fx-background-color: #03b5aa;" text="New Creation" textAlignment="CENTER" textFill="WHITE" AnchorPane.bottomAnchor="25.0" AnchorPane.rightAnchor="35.0">
+      <JFXButton fx:id="newCreationButton" alignment="CENTER" buttonType="RAISED" layoutX="962.0" layoutY="707.0" prefHeight="68.0" prefWidth="212.0" ripplerFill="#023436" style="-fx-background-color: #03b5aa;" text="New Creation" textAlignment="CENTER" textFill="WHITE" AnchorPane.bottomAnchor="25.0" AnchorPane.rightAnchor="35.0">
          <font>
             <Font name="Lato Medium" size="25.0" />
          </font></JFXButton>
@@ -28,12 +28,12 @@
             <Font name="Lato Medium" size="33.0" />
          </font>
       </Text>
-      <JFXButton fx:id="playButton" alignment="CENTER" buttonType="RAISED" layoutX="480.0" layoutY="707.0" onAction="#playbuttonhandler" prefHeight="68.0" prefWidth="179.0" ripplerFill="#023436" style="-fx-background-color: #03b5aa;" text="PLAY" textAlignment="CENTER" textFill="WHITE" AnchorPane.bottomAnchor="25.0" AnchorPane.rightAnchor="550.0">
+      <JFXButton fx:id="playButton" alignment="CENTER" buttonType="RAISED" layoutX="480.0" layoutY="707.0" prefHeight="68.0" prefWidth="179.0" ripplerFill="#023436" style="-fx-background-color: #03b5aa;" text="PLAY" textAlignment="CENTER" textFill="WHITE" AnchorPane.bottomAnchor="25.0" AnchorPane.rightAnchor="550.0">
          <font>
             <Font name="Lato Medium" size="25.0" />
          </font>
       </JFXButton>
-      <JFXButton fx:id="deleteButton" alignment="CENTER" buttonType="RAISED" layoutX="688.0" layoutY="707.0" onAction="#deletebuttonhandler" prefHeight="68.0" prefWidth="154.0" ripplerFill="#023436" style="-fx-background-color: #03b5aa;" text="DELETE" textAlignment="CENTER" textFill="WHITE" AnchorPane.bottomAnchor="25.0" AnchorPane.rightAnchor="358.0">
+      <JFXButton fx:id="deleteButton" alignment="CENTER" buttonType="RAISED" layoutX="688.0" layoutY="707.0" prefHeight="68.0" prefWidth="154.0" ripplerFill="#023436" style="-fx-background-color: #03b5aa;" text="DELETE" textAlignment="CENTER" textFill="WHITE" AnchorPane.bottomAnchor="25.0" AnchorPane.rightAnchor="358.0">
          <font>
             <Font name="Lato Medium" size="25.0" />
          </font>
