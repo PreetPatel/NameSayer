@@ -299,12 +299,13 @@ public class HomeViewController {
             JOptionPane.showMessageDialog(null, "An Error occurred while trying to continue: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
 
-        //Sets handlers for buttons
+        /* Sets handlers for buttons */
         playButton.setOnAction(this::playButtonHandler);
         deleteButton.setOnAction(this::deleteButtonHandler);
         newCreationButton.setOnAction(this::createButtonHandler);
+
+        /* Sets properties for the scrollview within which the creationsPane sits */
         scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-        scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         scrollPane.setStyle("-fx-background-color: #023436; -fx-background: #023436");
         scrollPane.addEventFilter(ScrollEvent.SCROLL,new EventHandler<ScrollEvent>() {
             @Override
@@ -314,7 +315,6 @@ public class HomeViewController {
                 }
             }
         });
-        scrollPane.requestFocus();
     }
 
     /**
