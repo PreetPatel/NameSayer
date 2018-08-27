@@ -17,8 +17,10 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
@@ -49,6 +51,9 @@ public class HomeViewController {
 
     @FXML
     private JFXMasonryPane creationsPane;
+
+    @FXML
+    private ScrollPane scrollPane;
 
     private String selectedCreation;
 
@@ -298,6 +303,18 @@ public class HomeViewController {
         playButton.setOnAction(this::playButtonHandler);
         deleteButton.setOnAction(this::deleteButtonHandler);
         newCreationButton.setOnAction(this::createButtonHandler);
+        scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        scrollPane.setStyle("-fx-background-color: #023436; -fx-background: #023436");
+        scrollPane.addEventFilter(ScrollEvent.SCROLL,new EventHandler<ScrollEvent>() {
+            @Override
+            public void handle(ScrollEvent event) {
+                if (event.getDeltaX() != 0) {
+                    event.consume();
+                }
+            }
+        });
+        scrollPane.requestFocus();
     }
 
     /**
