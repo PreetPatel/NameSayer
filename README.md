@@ -56,8 +56,8 @@ A GUI App that allows you to practice saying names
 Click the 'x' button at the top of the window.
 
 ## Screenshots
-!(https://i.imgur.com/3uIWwWy.png)
-!(https://i.imgur.com/6KQVyJA.png)
-!(https://i.imgur.com/iCfPNG1.png)
-!(https://i.imgur.com/y3BmpHR.png)
-!(https://i.imgur.com/MPZq1FR.png)
+![alt-text](https://i.imgur.com/3uIWwWy.png)
+![alt-text](https://i.imgur.com/6KQVyJA.png)
+![alt-text](https://i.imgur.com/iCfPNG1.png)
+![alt-text](https://i.imgur.com/y3BmpHR.png)
+![alt-text](https://i.imgur.com/MPZq1FR.png)
