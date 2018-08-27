@@ -11,6 +11,8 @@ package app;
 
 import com.jfoenix.controls.JFXButton;
 import javafx.concurrent.Task;
+import javafx.concurrent.WorkerStateEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.AnchorPane;
@@ -54,13 +56,24 @@ public class NewCreationViewController {
         _nameOfCreation = nameOfCreation;
     }
 
+    /**
+     * Handler for the close button to go back to the Home View.
+     * Opens an error dialog if there is an error
+     */
     @FXML
-    private void handleCloseButton() throws Exception{
-        Pane newLoadedPane =  FXMLLoader.load(getClass().getResource("HomeViewController.fxml"));
-        anchorPane.getChildren().add(newLoadedPane);
+    private void handleCloseButton() {
+        try {
+            Pane newLoadedPane = FXMLLoader.load(getClass().getResource("HomeViewController.fxml"));
+            anchorPane.getChildren().add(newLoadedPane);
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(null, "An Error occurred while trying to continue: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+
+        }
     }
 
-
+    /**
+     * Initialises the scene by setting buttons visible status and loading the stage
+     */
     @FXML
     private void initialize() {
         StringValidator validate = new StringValidator(_nameOfCreation);
@@ -73,9 +86,11 @@ public class NewCreationViewController {
         redoAudio.setVisible(false);
     }
 
+    /**
+     * Runs the record and timer threads on a background process and sets buttons to disabled
+     */
     @FXML
-    private void startRecord() throws IOException, InterruptedException {
-
+    private void startRecord() {
 
         record.setDisable(true);
         record.setText("Recording...");
@@ -90,6 +105,9 @@ public class NewCreationViewController {
 
     }
 
+    /**
+     * Thread for showing the countdown text
+     */
     private class timerShow extends Task<Void> {
 
         @Override
@@ -105,6 +123,9 @@ public class NewCreationViewController {
         }
     }
 
+    /**
+     * Thread to show buttons after recording
+     */
     private class showButtons extends Task<Void> {
 
         @Override
@@ -117,6 +138,9 @@ public class NewCreationViewController {
         }
     }
 
+    /**
+     * Runs the playAudioFile thread
+     */
     @FXML
     private void playAudio() {
         Thread playAudio = new Thread(new playAudioFile());
@@ -124,6 +148,9 @@ public class NewCreationViewController {
 
     }
 
+    /**
+     * Thread for playing an audio file in the background
+     */
     private class playAudioFile extends Task<Void> {
 
         @Override
@@ -142,27 +169,43 @@ public class NewCreationViewController {
         }
     }
 
+    /**
+     * Thread for creating a new creation while recording audio. Generates an audio file
+     */
+
     private class createAudioFile extends Task<Void> {
 
         @Override
         protected Void call() throws Exception {
             ProcessBuilder builder = new ProcessBuilder("/bin/bash", "-c", "ffmpeg -t 5 -f alsa -ac 2 -i default " + NameSayer.creationsPath +"/'"+ _nameOfCreation + "_audio.mp3'");
-            Process process = builder.start();
+            builder.start();
             return null;
         }
     }
 
+    /**
+     * Reloads the NewCreationViewController to enable user to redo an audio recording. The deleteAudioFile thread is called
+     * that deletes the temporary file
+     */
     @FXML
-    private void redoButtonHandler() throws Exception {
+    private void redoButtonHandler() {
         if (mediaPlayer != null) {
             mediaPlayer.stop();
         }
         Thread deleteAudio = new Thread(new deleteAudioFile());
         deleteAudio.start();
-        Pane newLoadedPane =  FXMLLoader.load(getClass().getResource("NewCreationViewController.fxml"));
-        anchorPane.getChildren().add(newLoadedPane);
+        try {
+            Pane newLoadedPane = FXMLLoader.load(getClass().getResource("NewCreationViewController.fxml"));
+            anchorPane.getChildren().add(newLoadedPane);
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(null, "An Error occurred while trying to continue: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+
+        }
     }
 
+    /**
+     * Deletes the temporary audio file. Is called when the redo button is pressed
+     */
     private class deleteAudioFile extends Task<Void> {
 
         @Override
@@ -173,6 +216,11 @@ public class NewCreationViewController {
         }
     }
 
+    /**
+     * Button handler for the keep button that runs the bash command for merging audio and video only files into one
+     * Format of generated video is MP4
+     * The creation is handled in a different thread
+     */
     @FXML
     private void keepButtonHandler() {
         if (mediaPlayer != null) {
@@ -180,38 +228,56 @@ public class NewCreationViewController {
         }
         loaderText.setText("Saving your creation...");
 
-        Task<Void> task = new Task<Void>() {
-            @Override
-            public Void call() throws Exception {
-                String command = "ffmpeg -f lavfi -i color=c=white:s=1920x1080:d=5 -vf \"drawtext=fontsize=60: " +
-                        "fontcolor=black:x=(w-text_w)/2:y=(h-text_h)/2:text='" + _nameOfCreation +"'\" " + NameSayer.creationsPath +"/'"+ _nameOfCreation +"_video.mp4' 2>/dev/null && " +
-                        "ffmpeg -i " + NameSayer.creationsPath +"/'"+ _nameOfCreation +"_video.mp4' -i " + NameSayer.creationsPath +"/'"+ _nameOfCreation +"_audio.mp3' -codec copy -shortest " +
-                        "" + NameSayer.creationsPath +"/'"+ _nameOfCreation +".mp4' 2> /dev/null && " +
-                        "rm " + NameSayer.creationsPath +"/'"+ _nameOfCreation +"_video.mp4' 2>/dev/null && " +
-                        "rm " + NameSayer.creationsPath +"/'"+ _nameOfCreation +"_audio.mp3' 2>/dev/null";
-                ProcessBuilder builder = new ProcessBuilder("/bin/bash", "-c", command);
-                Process process = builder.start();
-                process.waitFor();
-                return null;
-            }
-        };
-
         Thread thread = new Thread(task);
+        task.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
+            @Override
+            public void handle(WorkerStateEvent event) {
+                goBack();
+            }
+        });
         thread.start();
-        try {
-            thread.join();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        goBack();
     }
 
+    Task<Void> task = new Task<Void>() {
+        @Override
+        public Void call() throws Exception {
+            String command = "ffmpeg -f lavfi -i color=c=white:s=1920x1080:d=5 -vf \"drawtext=fontsize=60: " +
+                    "fontcolor=black:x=(w-text_w)/2:y=(h-text_h)/2:text='" + _nameOfCreation +"'\" " + NameSayer.creationsPath +"/'"+ _nameOfCreation +"_video.mp4' 2>/dev/null && " +
+                    "ffmpeg -i " + NameSayer.creationsPath +"/'"+ _nameOfCreation +"_video.mp4' -i " + NameSayer.creationsPath +"/'"+ _nameOfCreation +"_audio.mp3' -codec copy -shortest " +
+                    "" + NameSayer.creationsPath +"/'"+ _nameOfCreation +".mp4' 2> /dev/null && " +
+                    "rm " + NameSayer.creationsPath +"/'"+ _nameOfCreation +"_video.mp4' 2>/dev/null && " +
+                    "rm " + NameSayer.creationsPath +"/'"+ _nameOfCreation +"_audio.mp3' 2>/dev/null";
+            ProcessBuilder builder = new ProcessBuilder("/bin/bash", "-c", command);
+            Process process = builder.start();
+
+            return null;
+        }
+    };
+
+    /**
+     * Loads the HomeViewController scene
+     */
     private void goBack() {
-                try {
-                    Pane newLoadedPane = FXMLLoader.load(getClass().getResource("HomeViewController.fxml"));
-                    anchorPane.getChildren().add(newLoadedPane);
-                } catch (IOException io) {
-                    JOptionPane.showMessageDialog(null, "An Error occurred while trying to continue: " + io.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-                }
+       Thread goback = new Thread(loadertask);
+       goback.start();
+//        try {
+//            goback.sleep(2000);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+
     }
+
+    Task<Void> loadertask = new Task<Void>() {
+        @Override
+        public Void call() throws Exception {
+            try {
+                Pane newLoadedPane = FXMLLoader.load(getClass().getResource("HomeViewController.fxml"));
+                anchorPane.getChildren().add(newLoadedPane);
+            } catch (IOException io) {
+                JOptionPane.showMessageDialog(null, "An Error occurred while trying to continue: " + io.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            }
+            return null;
+        }
+    };
 }
