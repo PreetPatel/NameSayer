@@ -1,14 +1,11 @@
 <component name="ArtifactManager">
-  <artifact name="preetpatel:jar">
+  <artifact type="jar" name="preetpatel:jar">
     <output-path>$PROJECT_DIR$/classes/artifacts/preetpatel_jar</output-path>
-    <root id="root">
-      <element id="archive" name="preetpatel.jar">
-        <element id="module-output" name="preetpatel_main" />
+    <root id="archive" name="preetpatel.jar">
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/META-INF/MANIFEST.MF" />
       </element>
-      <element id="file-copy" path="$PROJECT_DIR$/libs/jfoenix-8.0.7.jar" />
-      <element id="library" level="project" name="Gradle: junit:junit:4.12" />
-      <element id="library" level="project" name="jfoenix-8.0.7" />
-      <element id="library" level="project" name="Gradle: org.hamcrest:hamcrest-core:1.3" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/libs/jfoenix-8.0.7.jar" path-in-jar="/" />
     </root>
   </artifact>
 </component>

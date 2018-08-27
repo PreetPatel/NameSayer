@@ -1,5 +1,0 @@
-Manifest-Version: 1.0
-Class-Path: jfoenix-8.0.7.jar junit-4.12.jar jfoenix-8.0.7.jar hamcres
- t-core-1.3.jar
-Main-Class: app.NameSayer
-
