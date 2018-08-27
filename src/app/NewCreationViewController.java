@@ -10,6 +10,7 @@
 package app;
 
 import com.jfoenix.controls.JFXButton;
+import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.concurrent.WorkerStateEvent;
 import javafx.event.EventHandler;
@@ -229,12 +230,6 @@ public class NewCreationViewController {
         loaderText.setText("Saving your creation...");
 
         Thread thread = new Thread(task);
-        task.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
-            @Override
-            public void handle(WorkerStateEvent event) {
-                goBack();
-            }
-        });
         thread.start();
     }
 
@@ -249,6 +244,14 @@ public class NewCreationViewController {
                     "rm " + NameSayer.creationsPath +"/'"+ _nameOfCreation +"_audio.mp3' 2>/dev/null";
             ProcessBuilder builder = new ProcessBuilder("/bin/bash", "-c", command);
             Process process = builder.start();
+            process.waitFor();
+
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    goBack();
+                }
+            });
 
             return null;
         }
@@ -258,26 +261,11 @@ public class NewCreationViewController {
      * Loads the HomeViewController scene
      */
     private void goBack() {
-       Thread goback = new Thread(loadertask);
-       goback.start();
-//        try {
-//            goback.sleep(2000);
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
-
-    }
-
-    Task<Void> loadertask = new Task<Void>() {
-        @Override
-        public Void call() throws Exception {
-            try {
-                Pane newLoadedPane = FXMLLoader.load(getClass().getResource("HomeViewController.fxml"));
-                anchorPane.getChildren().add(newLoadedPane);
-            } catch (IOException io) {
-                JOptionPane.showMessageDialog(null, "An Error occurred while trying to continue: " + io.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-            }
-            return null;
+        try {
+            Pane newLoadedPane = FXMLLoader.load(getClass().getResource("HomeViewController.fxml"));
+            anchorPane.getChildren().add(newLoadedPane);
+        } catch (IOException io) {
+            JOptionPane.showMessageDialog(null, "An Error occurred while trying to continue: " + io.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
-    };
+    }
 }
