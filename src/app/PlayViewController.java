@@ -120,46 +120,50 @@ public class PlayViewController {
     @FXML
     public void initialize() {
 
-        if (mediaToPlay.isEmpty()) {
-            throw new RuntimeException("No media set to play");
-        }
-
         String path = NameSayer.creationsPath +"/" + mediaToPlay + ".mp4";
         File file = new File(path);
-       try {
-            Media media = new Media(file.toURI().toString());
-            mediaPlayer = new MediaPlayer(media);
-            view.setMediaPlayer(mediaPlayer);
-            mediaPlayer.setOnReady(new Runnable() {
-                @Override
-                public void run() {
 
-                    videoslider.setMax(media.getDuration().toSeconds());
-                    mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
-                    mediaPlayer.play();
+        /** Try and see if the file exists. Throw and error and refresh the page if there is an error */
+        if (mediaToPlay.isEmpty() || !file.exists()) {
+            JOptionPane.showMessageDialog(null, "An Error occurred while trying to play this file.", "Error", JOptionPane.ERROR_MESSAGE);
+            backHandler();
+        } else {
 
-                    InvalidationListener sliderChangeListener = o -> {
-                        Duration seekTo = Duration.seconds(videoslider.getValue());
-                        mediaPlayer.seek(seekTo);
-                    };
+            try {
+                Media media = new Media(file.toURI().toString());
+                mediaPlayer = new MediaPlayer(media);
+                view.setMediaPlayer(mediaPlayer);
+                mediaPlayer.setOnReady(new Runnable() {
+                    @Override
+                    public void run() {
 
-                    videoslider.valueProperty().addListener(sliderChangeListener);
+                        videoslider.setMax(media.getDuration().toSeconds());
+                        mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+                        mediaPlayer.play();
 
-                    mediaPlayer.currentTimeProperty().addListener(i -> {
-                        videoslider.valueProperty().removeListener(sliderChangeListener);
-                        Duration currentTime = mediaPlayer.getCurrentTime();
-                        int value = (int) currentTime.toSeconds();
-                        videoslider.setValue(value);
-                        durationText.setText(Double.toString(round(currentTime.toSeconds())));
+                        InvalidationListener sliderChangeListener = o -> {
+                            Duration seekTo = Duration.seconds(videoslider.getValue());
+                            mediaPlayer.seek(seekTo);
+                        };
 
                         videoslider.valueProperty().addListener(sliderChangeListener);
 
-                    });
-                }
-            });
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "An Error occurred while trying to play this file.", "Error", JOptionPane.ERROR_MESSAGE);
-            backHandler();
+                        mediaPlayer.currentTimeProperty().addListener(i -> {
+                            videoslider.valueProperty().removeListener(sliderChangeListener);
+                            Duration currentTime = mediaPlayer.getCurrentTime();
+                            int value = (int) currentTime.toSeconds();
+                            videoslider.setValue(value);
+                            durationText.setText(Double.toString(round(currentTime.toSeconds())));
+
+                            videoslider.valueProperty().addListener(sliderChangeListener);
+
+                        });
+                    }
+                });
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "An Error occurred while trying to play this file.", "Error", JOptionPane.ERROR_MESSAGE);
+                backHandler();
+            }
         }
 
     }
